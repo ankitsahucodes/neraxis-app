@@ -29,18 +29,18 @@ const LeadsList = () => {
                     ? filtered?.map((lead, index) => (
                         <li
                           className="d-flex flex-column flex-md-row justify-content-between py-2 list-group-item"
-                          key={lead._id}
+                          key={lead?._id}
                         >
                           <p className="col">
                             <strong>Lead: </strong> {index + 1}
                           </p>
                           <p className="col">
-                            <Link to={`/leads/${lead._id}`}>{lead.name}</Link>
+                            <Link to={`/leads/${lead?._id}`}>{lead?.name}</Link>
                           </p>
-                          <p className="col">{lead.status}</p>
+                          <p className="col">{lead?.status}</p>
                           <p className="col">
-                            <Link to={`/agents/${lead.salesAgent._id}`}>
-                              {lead.salesAgent.name}
+                            <Link to={`/agents/${lead?.salesAgent?._id}`}>
+                              {lead?.salesAgent?.name}
                             </Link>
                           </p>
                         </li>
