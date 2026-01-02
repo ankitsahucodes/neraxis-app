@@ -14,7 +14,7 @@ import LeadDetails from "./pages/LeadDetails.jsx";
 import Settings from "./pages/Settings.jsx";
 import AgentLeads from "./pages/AgentLeads.jsx";
 import Report from "./pages/Report.jsx";
-import Sales from "./pages/Sales.jsx";
+import LeadManagement from "./pages/LeadManagement.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
     path: "/leads",
     element: <LeadsList />,
   },{
-    path: "/sales",
-    element: <Sales />,
+    path: "/lead-management",
+    element: <LeadManagement />,
   },
   {
     path: "/leads/:id",

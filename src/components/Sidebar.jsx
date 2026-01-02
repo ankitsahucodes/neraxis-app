@@ -44,8 +44,8 @@ export default function Sidebar() {
             Leads
           </Link>
 
-          <Link to="/sales" className="btn btn-outline-dark w-100 mb-2">
-            Sales
+          <Link to="/lead-management" className="btn btn-outline-dark w-100 mb-2">
+            Lead Management
           </Link>
 
           <Link to="/salesAgents" className="btn btn-outline-dark w-100 mb-2">

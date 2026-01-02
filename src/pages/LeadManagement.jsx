@@ -3,12 +3,12 @@ import useLeadContext from "../context/LeadContext";
 import FilterLead from "../components/FilterLead";
 import Backbtn from "../components/BackBtn";
 
-const Sales = () => {
+const LeadManagement = () => {
   const { filtered, loading } = useLeadContext();
 
   return (
     <>
-      <h1 className="text-center border border-4 py-3 fw-bold">Lead List</h1>
+      <h1 className="text-center border border-4 py-3 fw-bold">Lead Management</h1>
 
       <div className="container">
         <div className="row mt-4">
@@ -17,7 +17,7 @@ const Sales = () => {
           <div className="col-12 col-md-10 mx-auto">
             <div className="border border-1 mb-3">
               <div className="border border-2 m-2">
-                <h2 className="text-center py-2">Lead Overview</h2>
+                <h2 className="text-center py-2">Filter Leads</h2>
               </div>
 
               <div className="py-3 container">
@@ -66,4 +66,4 @@ const Sales = () => {
   );
 };
 
-export default Sales;
+export default LeadManagement;
