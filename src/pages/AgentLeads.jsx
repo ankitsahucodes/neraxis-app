@@ -77,10 +77,10 @@ const AgentLeads = () => {
                             <strong>Lead: </strong> {index + 1}
                           </p>
                           <p className="col">
-                            <Link to={`/leads/${lead._id}`}>{lead.name}</Link>
+                            <Link to={`/leads/${lead._id}`}>{lead?.name}</Link>
                           </p>
-                          <p className="col">{lead.status}</p>
-                          <p className="col">{lead.salesAgent.name}</p>
+                          <p className="col">{lead?.status}</p>
+                          <p className="col">{lead?.salesAgent?.name}</p>
                         </li>
                       ))
                     : !loading && (

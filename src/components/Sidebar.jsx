@@ -19,6 +19,10 @@ export default function Sidebar() {
             Leads
           </Link>
 
+           <Link to="/sales" className="btn btn-outline-dark w-100 mb-2">
+            Sales
+          </Link>
+
           <Link to="/salesAgents" className="btn btn-outline-dark w-100 mb-2">
             Sales Agents
           </Link>
@@ -38,6 +42,10 @@ export default function Sidebar() {
         <div className="border p-2">
           <Link to="/leads" className="btn btn-outline-dark w-100 mb-2">
             Leads
+          </Link>
+
+          <Link to="/sales" className="btn btn-outline-dark w-100 mb-2">
+            Sales
           </Link>
 
           <Link to="/salesAgents" className="btn btn-outline-dark w-100 mb-2">

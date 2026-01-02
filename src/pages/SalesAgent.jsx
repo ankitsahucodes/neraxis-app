@@ -31,11 +31,13 @@ const SalesAgent = () => {
                         <strong>Agent: </strong> {index + 1}
                       </p>
                       <p className="mb-1 mb-md-0">
+                     
                         <Link to={`/agents/${agent._id}`}>{agent.name}</Link>
                       </p>
-                      <Link to={`/agents/${agent._id}`} className="me-5">
+                       {agent.email}
+                      {/* <Link to={`/agents/${agent._id}`} className="me-5">
                         {agent.email}
-                      </Link>
+                      </Link> */}
                     </li>
                   ))}
                 </ul>
