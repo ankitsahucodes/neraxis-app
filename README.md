@@ -1,16 +1,187 @@
-# React + Vite
+# Neraxis CRM
+Neraxis CRM is a responsive full-stack CRM application for managing leads and sales agents with complete CRUD functionality and an intuitive interface.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Build with React Frontend, Express/Node backend, MongoDB database and React Router.
 
-Currently, two official plugins are available:
+## Demo Link
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Live Demo](https://neraxis-crm-app.vercel.app)
 
-## React Compiler
+##  Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+git clone https://github.com/ankitsahucodes/neraxis-app.git
+cd neraxis-app
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Technologies
+- React JS
+- React Router
+- Chart.js
+- Node.js
+- Express
+- MongoDB
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Demo Video
+
+Watch a 4-minute walkthrough of all major features:<br>
+[Watch Demo](https://drive.google.com/file/d/1wT2gbkUMgGH2mKiaM_l0GckRytI2lOij/view?usp=sharing)
+
+## Features
+**Dashboard**
+- Displays an overview of sales leads
+- Lead Filter by Status
+- Add New Lead Button.
+
+**Leads**
+- Displays all leads with assigned agent
+- Filter leads based on different criteria
+
+**Lead Management**
+- Displays all leads along with the status of the leads and few details
+
+**Sales Agent**
+- Displays a list of all the sales agent
+- Add New Sales Agent Button.
+
+**Leads by Agents**
+- Display leads by their assigned agents
+- Filter by status and time to close
+
+**Lead Details**
+- Display lead details with edit button
+- Displays all comments
+- Input box to add new comments
+
+**Add Agent**
+- Form to add a new Agent
+
+**Add Lead**
+- Form to add a new Lead
+
+**Report**
+- Total closed Leads and Leads in Pipeline
+- Leads Closed by Sales Agent
+- Lead Status Distribution
+
+**Settings**
+- Delete leads or agents
+
+## API Reference
+
+### **Sales Agents**
+
+### GET /agents
+Get all sales agents  
+**Sample Response:**
+```
+[{ _id, name, email, ... }]
+```
+
+### GET /agents/:id
+Get sales agent details  
+**Sample Response:**
+```
+{ _id, name, email, ... }
+```
+
+### POST /agents
+
+Create a new sales agent  
+**Sample Response:**
+```
+{ _id, name, email, ... }
+```
+
+### DELETE /agents/:id
+Delete a sales agent  
+**Sample Response:**
+```
+{ message, agent }
+```
+### **Leads**
+
+### GET /leads
+Get all leads  
+**Sample Response:**
+```
+[{ _id, name, source, salesAgent, status, tags, ... }]
+```
+
+### GET /leads/:id
+Get lead details  
+**Sample Response:**
+```
+{ _id, name, source, salesAgent, status, tags, ... }
+```
+
+### POST /leads
+Create a new lead  
+**Sample Response:**
+```
+{ _id, name, source, status, ... }
+```
+
+### PUT /leads/:id
+Update a lead  
+**Sample Response:**
+```
+{ _id, name, status, updatedAt, ... }
+```
+
+### DELETE /leads/:id
+Delete a lead  
+**Sample Response:**
+```
+{ message, lead }
+```
+### Comments
+
+### GET /leads/:id/comments
+Get all comments for a lead  
+**Sample Response:**
+```
+[{ _id, author, commentText, createdAt, ... }]
+```
+
+### POST /leads/:id/comments
+Add a comment to a lead  
+**Sample Response:**
+```
+{ _id, author, commentText, ... }
+```
+
+Reports
+
+### GET /report/pipeline
+Get total leads in pipeline  
+**Sample Response:**
+```
+{ totalLeadsInPipeline }
+```
+
+### GET /report/pipeline/closed
+Get total closed leads  
+**Sample Response:**
+```
+{ totalClosedInPipeline }
+```
+
+### GET /report/last-week
+Get leads closed in last 7 days  
+**Sample Response:**
+```
+{ totalClosedLastWeek }
+```
+
+### GET /report/closed-by-agent
+Get closed leads grouped by sales agent  
+**Sample Response:**
+```
+[{ agentName, count }]
+```
+## Contact
+
+For bugs or feature requests, please reach out to ankitsahu2829@gmail.com
