@@ -15,7 +15,18 @@ cd neraxis-app
 npm install
 npm run dev
 ```
+## Environment Setup
+Create a `.env` file in the root directory:
 
+```env
+PORT=3000
+MONGODB_URI=your_mongodb_connection_string
+```
+#### Required Keys:<br>
+PORT – Port on which the server runs<br>
+MONGODB_URI – MongoDB connection string
+
+---
 ## Technologies
 - React JS
 - React Router
@@ -31,23 +42,24 @@ Watch a 4-minute walkthrough of all major features:<br>
 
 ## Features
 **Dashboard**
-- Displays an overview of sales leads
+- Displays names of all leads
 - Lead Filter by Status
-- Add New Lead Button.
+- Add New Lead Button
 
 **Leads**
-- Displays all leads with assigned agent
-- Filter leads based on different criteria
+- Displays list of all leads
+- Filter leads by status or agent
+- Sort leads by priority or time to close
 
 **Lead Management**
-- Displays all leads along with the status of the leads and few details
+- Displays list of all leads
 
 **Sales Agent**
 - Displays a list of all the sales agent
 - Add New Sales Agent Button.
 
 **Leads by Agents**
-- Display leads by their assigned agents
+- Display leads by assigned agents
 - Filter by status and time to close
 
 **Lead Details**
