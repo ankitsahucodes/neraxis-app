@@ -15,12 +15,12 @@ export default function Sidebar() {
       {/* Mobile Sidebar */}
       {show && (
         <div className="col-12 d-md-none shadow-sm p-3 mb-3 bg-body rounded">
-          <Link to="/leads" className="btn btn-outline-dark w-100 mb-2">
+         <Link to="/leads" className="btn btn-outline-dark w-100 mb-2">
             Leads
           </Link>
 
-           <Link to="/sales" className="btn btn-outline-dark w-100 mb-2">
-            Sales
+          <Link to="/lead-management" className="btn btn-outline-dark w-100 mb-2">
+            Lead Management
           </Link>
 
           <Link to="/salesAgents" className="btn btn-outline-dark w-100 mb-2">
