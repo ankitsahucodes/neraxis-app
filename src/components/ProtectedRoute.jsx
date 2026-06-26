@@ -24,8 +24,6 @@ const ProtectedRoute = () => {
         });
       } catch (error) {
         setAuthenticated(false);
-
-        toast.error("Please log in to access this page");
         console.log(error);
       } finally {
         setLoading(false);
