@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import useLeadContext from "../context/LeadContext";
 import Backbtn from "../components/BackBtn";
+import axios from "axios";
 const AddSalesAgent = () => {
   const { fetchSalesAgent } = useLeadContext();
   const [formData, setFormData] = useState({
@@ -20,39 +21,35 @@ const AddSalesAgent = () => {
     }));
   };
 
-  const handleAgentSubmit = async (event) => {
-    event.preventDefault();
+ const handleAgentSubmit = async (event) => {
+  event.preventDefault();
 
-    try {
-      const response = await fetch("https://neraxis-crm-backend.vercel.app/agents", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        toast.success("Agent added Successfully!");
-
-        await fetchSalesAgent();
-
-        setTimeout(() => {
-          navigate(-1);
-        }, 500);
-
-        setFormData({
-          name: "",
-          email: "",
-        });
-      } else {
-        response.json({ error: "Failed to add Lead" });
-        toast.error("Failed to add Lead");
+  try {
+    await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/agents`,
+      formData,
+      {
+        withCredentials: true,
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    );
+
+    toast.success("Agent added Successfully!");
+
+    await fetchSalesAgent();
+
+    setTimeout(() => {
+      navigate(-1);
+    }, 500);
+
+    setFormData({
+      name: "",
+      email: "",
+    });
+  } catch (error) {
+    console.error(error);
+    toast.error(error.response?.data?.error || "Failed to add Agent");
+  }
+};
 
   return (
     <>

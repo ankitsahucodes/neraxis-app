@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useLeadContext from "../context/LeadContext";
 import { toast } from "react-toastify";
 import Backbtn from "../components/BackBtn";
+import axios from "axios";
 
 const Settings = () => {
   const [settingsData, setSettingsData] = useState("Leads");
@@ -11,38 +12,37 @@ const Settings = () => {
 
   async function handledeleteLead(leadId) {
     try {
-      const res = await fetch(`https://neraxis-crm-backend.vercel.app/leads/${leadId}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to delete Lead");
-      }
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/leads/${leadId}`,
+        {
+          withCredentials: true,
+        },
+      );
 
       await fetchLeads();
       toast.success("Lead Deleted!");
     } catch (error) {
-      console.log("Lead delete error:", error);
-      toast.error("Failed to delete lead");
+      console.error("Lead delete error:", error);
+      toast.error(error.response?.data?.error || "Failed to delete lead");
     }
   }
 
   async function handledeleteAgent(agentId) {
     try {
-      const res = await fetch(`https://neraxis-crm-backend.vercel.app/agents/${agentId}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to delete agent");
-      }
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/agents/${agentId}`,
+        {
+          withCredentials: true,
+        },
+      );
 
       await fetchSalesAgent();
       await fetchLeads();
+
       toast.success("Sales Agent Deleted!");
     } catch (error) {
-      console.log("Agent delete error:", error);
-      toast.error("Failed to delete agent");
+      console.error("Agent delete error:", error);
+      toast.error(error.response?.data?.error || "Failed to delete agent");
     }
   }
 
@@ -82,18 +82,20 @@ const Settings = () => {
                   ? data?.map((lead, index) => (
                       <ul key={lead._id} className="list-group">
                         <li className="list-group-item py-3">
-                          <div className="row ">
-                            <div className="col">
+                          <div className="row align-items-center g-3">
+                            <div className="col-12 col-md-5">
                               <strong>Lead {index + 1}: </strong>
                               {lead.name}
                             </div>
-                            <div className="col">
+
+                            <div className="col-12 col-md-4">
                               <strong>Status: </strong>
                               {lead.status}
                             </div>
-                            <div className="col text-end">
+
+                            <div className="col-12 col-md-3 text-md-end">
                               <button
-                                className="btn btn-danger"
+                                className="btn btn-danger w-100 w-md-auto"
                                 onClick={() => handledeleteLead(lead._id)}
                               >
                                 Delete
@@ -105,27 +107,28 @@ const Settings = () => {
                     ))
                   : !loading && <p>No Lead Found</p>
                 : salesAgents.length > 0
-                ? salesAgents.map((agent, index) => (
-                    <ul key={agent._id} className="list-group">
-                      <li className="list-group-item py-3">
-                        <div className="row ">
-                          <div className="col">
-                            <strong>Agent {index + 1}: </strong>
-                            {agent.name}
+                  ? salesAgents.map((agent, index) => (
+                      <ul key={agent._id} className="list-group">
+                        <li className="list-group-item py-3">
+                          <div className="row align-items-center g-3">
+                            <div className="col-12 col-md-9">
+                              <strong>Agent {index + 1}: </strong>
+                              {agent.name}
+                            </div>
+
+                            <div className="col-12 col-md-3 text-md-end">
+                              <button
+                                className="btn btn-danger w-100"
+                                onClick={() => handledeleteAgent(agent._id)}
+                              >
+                                Delete
+                              </button>
+                            </div>
                           </div>
-                          <div className="col text-end">
-                            <button
-                              className="btn btn-danger"
-                              onClick={() => handledeleteAgent(agent._id)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  ))
-                : !loading && <p>No Agent Found.</p>}
+                        </li>
+                      </ul>
+                    ))
+                  : !loading && <p>No Agent Found.</p>}
             </div>
           </div>
         </div>

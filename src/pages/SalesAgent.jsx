@@ -23,21 +23,25 @@ const SalesAgent = () => {
               <div className="container">
                 <ul className="list-group mb-2">
                   {salesAgents?.map((agent, index) => (
-                    <li
-                      className="d-flex flex-column flex-md-row justify-content-between py-4 list-group-item"
-                      key={agent._id}
-                    >
-                      <p className="ms-md-5 mb-1 mb-md-0">
-                        <strong>Agent: </strong> {index + 1}
-                      </p>
-                      <p className="mb-1 mb-md-0">
-                     
-                        <Link to={`/agents/${agent._id}`}>{agent.name}</Link>
-                      </p>
-                       {agent.email}
-                      {/* <Link to={`/agents/${agent._id}`} className="me-5">
-                        {agent.email}
-                      </Link> */}
+                    <li className="list-group-item py-3" key={agent._id}>
+                      <div className="row align-items-center">
+                        <div className="col-12 col-md-2 mb-2 mb-md-0">
+                          <strong>Agent {index + 1}</strong>
+                        </div>
+
+                        <div className="col-12 col-md-5 mb-2 mb-md-0">
+                          <Link
+                            to={`/agents/${agent._id}`}
+                            className="text-decoration-none"
+                          >
+                            {agent.name}
+                          </Link>
+                        </div>
+
+                        <div className="col-12 col-md-5 text-break">
+                          {agent.email}
+                        </div>
+                      </div>
                     </li>
                   ))}
                 </ul>

@@ -3,6 +3,7 @@ import useLeadContext from "../context/LeadContext";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import axios from "axios";
 const AddComment = () => {
   const { salesAgents } = useLeadContext();
   const { id } = useParams();
@@ -23,11 +24,16 @@ const AddComment = () => {
 
   async function fetchComments() {
     try {
-      const res = await fetch(`https://neraxis-crm-backend.vercel.app/leads/${id}/comments`);
-      const commentData = await res.json();
-      setComments(commentData);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/leads/${id}/comments`,
+        {
+          withCredentials: true,
+        },
+      );
+
+      setComments(res.data);
     } catch (error) {
-      console.log("Failed to load comments:", error);
+      console.error(error);
       toast.error("Failed to load comments");
     }
   }
@@ -45,21 +51,20 @@ const AddComment = () => {
     };
 
     try {
-      const res = await fetch(`https://neraxis-crm-backend.vercel.app/leads/${id}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/leads/${id}/comments`,
+        newFormData,
+        {
+          withCredentials: true,
         },
-        body: JSON.stringify(newFormData),
-      });
+      );
 
-      if (res.ok) {
-        toast.success("Comment added Successfully");
-        clearForm();
-        fetchComments();
-      }
+      toast.success("Comment added Successfully");
+      clearForm();
+      fetchComments();
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error("Failed to add comment");
     }
   }
 

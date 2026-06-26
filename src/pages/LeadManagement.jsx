@@ -8,7 +8,9 @@ const LeadManagement = () => {
 
   return (
     <>
-      <h1 className="text-center border border-4 py-3 fw-bold">Lead Management</h1>
+      <h1 className="text-center border border-4 py-3 fw-bold">
+        Lead Management
+      </h1>
 
       <div className="container">
         <div className="row mt-4">
@@ -27,23 +29,30 @@ const LeadManagement = () => {
                   {loading && <p>Loading...</p>}
                   {filtered?.length > 0
                     ? filtered?.map((lead, index) => (
-                        <li
-                          className="d-flex flex-column flex-md-row justify-content-between py-2 list-group-item"
-                          key={lead?._id}
-                        >
-                          <p className="col">
-                            <strong>Lead: </strong> {index + 1}
-                          </p>
-                          <p className="col">
-                            {lead?.name}
-                          </p>
-                          <p className="col">{lead?.status}</p>
-                          <p className="col">{lead?.timeToClose} {lead?.timeToClose > 1 ? "Days" : "Day" }</p>
-                          <p className="col">
-                           
+                        <li className="list-group-item py-3" key={lead?._id}>
+                          <div className="row align-items-center g-2">
+                            <div className="col-12 col-md-2">
+                              <strong>Lead {index + 1}</strong>
+                            </div>
+
+                            <div className="col-12 col-md-3">{lead?.name}</div>
+
+                            <div className="col-6 col-md-2">
+                              <span className="fw-semibold">Status:</span>{" "}
+                              {lead?.status}
+                            </div>
+
+                            <div className="col-6 col-md-2">
+                              <span className="fw-semibold">Close:</span>{" "}
+                              {lead?.timeToClose}{" "}
+                              {lead?.timeToClose > 1 ? "Days" : "Day"}
+                            </div>
+
+                            <div className="col-12 col-md-3">
+                              <span className="fw-semibold">Agent:</span>{" "}
                               {lead?.salesAgent?.name}
-                          
-                          </p>
+                            </div>
+                          </div>
                         </li>
                       ))
                     : !loading && (

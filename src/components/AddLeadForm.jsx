@@ -4,6 +4,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import useLeadContext from "../context/LeadContext";
 import Backbtn from "./BackBtn";
+import axios from "axios";
 const AddLeadForm = () => {
   const { salesAgents, fetchLeads } = useLeadContext();
   const navigate = useNavigate();
@@ -25,25 +26,30 @@ const AddLeadForm = () => {
 
     async function loadDetails() {
       try {
-        const res = await fetch(`https://neraxis-crm-backend.vercel.app/leads/${editId}`);
-        const leadData = await res.json();
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/leads/${editId}`,
+          {
+            withCredentials: true,
+          },
+        );
 
-        if (leadData) {
-          setFormData({
-            name: leadData.name,
-            source: leadData.source,
-            salesAgent: leadData.salesAgent,
-            status: leadData.status,
-            priority: leadData.priority,
-            timeToClose: leadData.timeToClose,
-            tags: leadData.tags.map((tag) => ({
-              value: tag,
-              label: tag,
-            })),
-          });
-        }
+        const leadData = res.data;
+
+        setFormData({
+          name: leadData.name,
+          source: leadData.source,
+          salesAgent: leadData.salesAgent,
+          status: leadData.status,
+          priority: leadData.priority,
+          timeToClose: leadData.timeToClose,
+          tags: leadData.tags.map((tag) => ({
+            value: tag,
+            label: tag,
+          })),
+        });
       } catch (error) {
-        console.log("Lead details load error:", error);
+        console.error("Lead details load error:", error);
+        toast.error("Failed to load lead details");
       }
     }
 
@@ -75,46 +81,47 @@ const AddLeadForm = () => {
       tags: formData.tags.map((tag) => tag.value),
     };
 
-    const endPoint = editId
-      ? `https://neraxis-crm-backend.vercel.app/leads/${editId}`
-      : "https://neraxis-crm-backend.vercel.app/leads/";
-
     try {
-      const response = await fetch(endPoint, {
-        method: editId ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-        toast.success(
-          editId ? "Lead Details updated!" : "Lead added Successfully!"
+      if (editId) {
+        await axios.put(
+          `${import.meta.env.VITE_API_BASE_URL}/leads/${editId}`,
+          payload,
+          {
+            withCredentials: true,
+          },
         );
-
-        await fetchLeads();
-
-        setTimeout(() => {
-          navigate(-1);
-        }, 1000);
-
-        setFormData({
-          name: "",
-          source: "",
-          salesAgent: "",
-          status: "",
-          priority: "",
-          timeToClose: 1,
-          tags: [],
-        });
       } else {
-        const err = await response.json();
-        toast.error(err.error || "Enter valid inputs");
+        await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/leads`,
+          payload,
+          {
+            withCredentials: true,
+          },
+        );
       }
+
+      toast.success(
+        editId ? "Lead Details Updated!" : "Lead Added Successfully!",
+      );
+
+      await fetchLeads();
+
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
+
+      setFormData({
+        name: "",
+        source: "",
+        salesAgent: "",
+        status: "",
+        priority: "",
+        timeToClose: 1,
+        tags: [],
+      });
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
+      console.error(error);
+      toast.error(error.response?.data?.error || "Something went wrong");
     }
   };
 

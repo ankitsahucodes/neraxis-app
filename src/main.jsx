@@ -1,79 +1,88 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
-import App from "./App.jsx";
-import { LeadProvider } from "./context/LeadContext.jsx";
-import AddLeadForm from "./components/AddLeadForm.jsx";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SalesAgent from "./pages/SalesAgent.jsx";
-import AddSalesAgent from "./pages/AddSalesAgent.jsx";
-import LeadsList from "./pages/LeadsList.jsx";
-import LeadDetails from "./pages/LeadDetails.jsx";
-import Settings from "./pages/Settings.jsx";
-import AgentLeads from "./pages/AgentLeads.jsx";
-import Report from "./pages/Report.jsx";
-import LeadManagement from "./pages/LeadManagement.jsx";
+import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedLayout from "./components/ProtectedLayout";
+
+import App from "./App";
+import Login from "./pages/Login";
+import AddLeadForm from "./components/AddLeadForm";
+import SalesAgent from "./pages/SalesAgent";
+import AddSalesAgent from "./pages/AddSalesAgent";
+import LeadsList from "./pages/LeadsList";
+import LeadDetails from "./pages/LeadDetails";
+import Settings from "./pages/Settings";
+import AgentLeads from "./pages/AgentLeads";
+import Report from "./pages/Report";
+import LeadManagement from "./pages/LeadManagement";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path: "/login",
+    element: <Login />,
   },
+
   {
-    path: "/leads/add-lead",
-    element: <AddLeadForm />,
-  },
-  {
-    path: "/salesAgents",
-    element: <SalesAgent />,
-  },
-  {
-    path: "/agents/add-agent",
-    element: <AddSalesAgent />,
-  },
-  {
-    path: "/leads",
-    element: <LeadsList />,
-  },{
-    path: "/lead-management",
-    element: <LeadManagement />,
-  },
-  {
-    path: "/leads/:id",
-    element: <LeadDetails />,
-  },
-  {
-    path: "/settings",
-    element: <Settings />,
-  },
-  {
-    path: "/agents/:id",
-    element: <AgentLeads />,
-  },
-  {
-    path: "/report",
-    element: <Report />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <ProtectedLayout />,
+        children: [
+          {
+            path: "/",
+            element: <App />,
+          },
+          {
+            path: "/leads/add-lead",
+            element: <AddLeadForm />,
+          },
+          {
+            path: "/salesAgents",
+            element: <SalesAgent />,
+          },
+          {
+            path: "/agents/add-agent",
+            element: <AddSalesAgent />,
+          },
+          {
+            path: "/leads",
+            element: <LeadsList />,
+          },
+          {
+            path: "/lead-management",
+            element: <LeadManagement />,
+          },
+          {
+            path: "/leads/:id",
+            element: <LeadDetails />,
+          },
+          {
+            path: "/settings",
+            element: <Settings />,
+          },
+          {
+            path: "/agents/:id",
+            element: <AgentLeads />,
+          },
+          {
+            path: "/report",
+            element: <Report />,
+          },
+        ],
+      },
+    ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <LeadProvider>
-      <ToastContainer
-        position="top-left"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <RouterProvider router={router} />
-    </LeadProvider>
+    <ToastContainer
+      position="top-left"
+      autoClose={1500}
+      theme="dark"
+    />
+    <RouterProvider router={router} />
   </StrictMode>
 );

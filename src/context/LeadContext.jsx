@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 const LeadContext = createContext();
-
+import axios from "axios";
 const useLeadContext = () => useContext(LeadContext);
 export default useLeadContext;
 
@@ -77,31 +77,41 @@ export function LeadProvider({ children }) {
     setTimeSort("");
   }
 
-  async function fetchSalesAgent() {
-    try {
-      const res = await fetch("https://neraxis-crm-backend.vercel.app/agents");
-      const agentsData = await res.json();
-      setSalesAgent(agentsData);
-    } catch (error) {
-      console.log("Failed to load Agents:", error);
-    }
-  }
+ async function fetchSalesAgent() {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/agents`,
+      {
+        withCredentials: true,
+      }
+    );
 
-  async function fetchLeads() {
-    try {
-      setLoading(true);
-      setError(null);
-      const res = await fetch("https://neraxis-crm-backend.vercel.app/leads");
-      if (!res.ok) throw new Error("Failed to fetch leads");
-      const leadsData = await res.json();
-      setData(leadsData);
-    } catch (error) {
-      console.log("Failed to load Leads:", error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
+    setSalesAgent(res.data);
+  } catch (error) {
+    console.error("Failed to load Agents:", error);
   }
+}
+
+async function fetchLeads() {
+  try {
+    setLoading(true);
+    setError(null);
+
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/leads`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    setData(res.data);
+  } catch (error) {
+    console.error("Failed to load Leads:", error);
+    setError(error.response?.data?.error || "Failed to fetch leads");
+  } finally {
+    setLoading(false);
+  }
+}
 
   useEffect(() => {
     fetchLeads();

@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -14,7 +15,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   Tooltip,
-  Legend
+  Legend,
 );
 import { Doughnut, Bar, Pie } from "react-chartjs-2";
 import { useState, useEffect } from "react";
@@ -31,15 +32,33 @@ const Report = () => {
   const [salesAgentData, setSalesAgentData] = useState([]);
 
   async function fetchWeekData() {
-    const res = await fetch("https://neraxis-crm-backend.vercel.app/report/last-week");
-    const json = await res.json();
-    setWeekData(json.totalClosedLastWeek);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/report/last-week`,
+        {
+          withCredentials: true,
+        },
+      );
+
+      setWeekData(res.data.totalClosedLastWeek);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async function fetchAgentData() {
-    const res = await fetch("https://neraxis-crm-backend.vercel.app/report/closed-by-agent");
-    const json = await res.json();
-    setSalesAgentData(json);
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/report/closed-by-agent`,
+        {
+          withCredentials: true,
+        },
+      );
+
+      setSalesAgentData(res.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const labels = salesAgentData.map((item) => item.agentName);
@@ -47,23 +66,34 @@ const Report = () => {
 
   async function fetchLeadsFromPipeline() {
     try {
-      const res = await fetch("https://neraxis-crm-backend.vercel.app/report/pipeline");
-      const piplineData = await res.json();
-      setLeadsInPipeLine(piplineData);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/report/pipeline`,
+        {
+          withCredentials: true,
+        },
+      );
+
+      setLeadsInPipeLine(res.data);
     } catch (error) {
-      console.log("Error", error);
+      console.error(error);
     }
   }
 
   async function fetchClosedLeadsFromPipeline() {
     try {
-      const res = await fetch("https://neraxis-crm-backend.vercel.app/report/pipeline/closed");
-      const closedData = await res.json();
-      setClosedInPipeline(closedData);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/report/pipeline/closed`,
+        {
+          withCredentials: true,
+        },
+      );
+
+      setClosedInPipeline(res.data);
     } catch (error) {
-      console.log("Error", error);
+      console.error(error);
     }
   }
+
   useEffect(() => {
     fetchClosedLeadsFromPipeline();
     fetchWeekData();
