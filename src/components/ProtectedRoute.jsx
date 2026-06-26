@@ -16,19 +16,17 @@ const ProtectedRoute = () => {
             withCredentials: true,
           },
         );
-       
+
         setAuthenticated(true);
 
         toast.success(`Welcome, ${res.data.user.name}!`, {
           toastId: "login-success",
         });
       } catch (error) {
-        
         setAuthenticated(false);
 
-        toast.error("Please login to continue", {
-          toastId: "login-error",
-        });
+        toast.error("Please log in to access this page");
+        console.log(error);
       } finally {
         setLoading(false);
       }

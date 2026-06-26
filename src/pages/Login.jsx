@@ -27,7 +27,7 @@ const Login = () => {
       >
         <div className="card-body text-center p-5">
           <img
-            src="./public/n.png"
+            src="/n.png"
             alt="Neraxis CRM"
             width="80"
             className="mb-3"
